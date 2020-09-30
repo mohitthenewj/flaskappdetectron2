@@ -18,7 +18,7 @@ app.config['CACHE_TYPE'] = 'simple'
 cache = Cache()
 cache.init_app(app)
 
-@cache.cached(timeout = 1000000000)
+@cache.cached(timeout = 10e8)
 def model():
     return load_model()
 
@@ -28,8 +28,11 @@ def app_main():
     os.system('rm /app/*mp4')
     message = request.get_json(force=True)
     video_id = message["ID"]
-    pull_main(video_id=video_id)
-    pre_process(video_id=video_id)
+    fps  = int(message['FPS'])
+    duration = int(message["duration"])
+    lang = message['lang'].lower()
+    pull_main(video_id=video_id, lang= lang)
+    pre_process(video_id=video_id, fps=fps, trim_duration=duration)
     data = object_d2(video_id= f'{video_id}_', model= model())
     return data
 
