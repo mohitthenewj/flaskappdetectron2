@@ -2,6 +2,12 @@
 FROM nvidia/cuda:10.1-devel-ubuntu18.04
 
 ENV DEBIAN_FRONTEND noninteractive
+
+RUN cd /var/lib/apt/lists/ && rm -fr * && cd /etc/apt/sources.list.d/ && rm -fr * && cd /etc/apt && \
+         cp sources.list sources.list.old &&  cp sources.list sources.list.tmp && \
+         sed 's/ubuntuarchive.hnsdc.com/us.archive.ubuntu.com/' sources.list.tmp | tee sources.list &&\
+          rm sources.list.tmp* && apt-get clean && apt-get update
+
 RUN apt-get update && apt-get install -y \
     apache2 \
     curl \
@@ -51,8 +57,6 @@ RUN pip install --user torch==1.6 torchvision==0.7 -f https://download.pytorch.o
 
 RUN pip install --user streamlit --use-feature=2020-resolver
 
-
-
 # install detectron2
 # RUN sudo mkdir -p /app
 
@@ -85,6 +89,13 @@ RUN pip install --user -e /app/docker_files/detectron2
 WORKDIR /app
 ENTRYPOINT ["python3"]
 CMD ["flask_app.py"]
+
+# Pull Blob storage video > process it locally (trimming)> Do OD > save output to Cosmos DB
+
+
+# change name in setup.py
+# build locally 
+# track the name of pkg
 
 # ENTRYPOINT ["python3"]
 # CMD ["/app/flask_app.py"]
