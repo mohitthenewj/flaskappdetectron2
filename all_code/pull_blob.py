@@ -10,8 +10,9 @@ from multiprocessing import set_start_method
 from os.path import isfile, join
 
 
-def pull_main(video_id = None, container_client = 'athenaliveprod', lang = 'hindi'):
-    if isfile(f'/app/{video_id}.mp4'):
+def pull_main(video_id = None, container_client = 'athenaliveprod', lang = 'hindi' ):
+    basepath = '/app'
+    if isfile(f'{basepath}/{video_id}.mp4'):
         print(f'file already exists')
         pass
     else: 
@@ -38,10 +39,9 @@ def pull_main(video_id = None, container_client = 'athenaliveprod', lang = 'hind
                 print(f"Downloading {video_id}.mp4")
                 downloader = container.download_blob(b)
                 # file_name = name_blob.split('/')[-1]
-                with open(f"/app/{video_id}.mp4", 'wb') as f:
+                with open(f"{basepath}/{video_id}.mp4", 'wb') as f:
                     downloader.readinto(f)
                 break
-
 
 
 # @timer(1,1)

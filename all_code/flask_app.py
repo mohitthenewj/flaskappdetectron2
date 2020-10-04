@@ -9,9 +9,6 @@ from flask import Flask,request
 from flask_caching import Cache
 
 
-
-
-
 app = Flask(__name__)
 app.config['CACHE_TYPE'] = 'simple'
 
@@ -31,7 +28,9 @@ def app_main():
     fps  = int(message['FPS'])
     duration = int(message["duration"])
     lang = message['lang'].lower()
-    pull_main(video_id=video_id, lang= lang)
+    container_client = message['container'].lower()
+    
+    pull_main(video_id=video_id, lang= lang, container_client = container_client)
     pre_process(video_id=video_id, fps=fps, trim_duration=duration)
     data = object_d2(video_id= f'{video_id}_', model= model())
     return data
