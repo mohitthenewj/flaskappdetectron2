@@ -14,9 +14,9 @@ Repository contains source code inspired from https://github.com/facebookresearc
     * Python dependencies, requirements.txt
     * TImer util
 * Dockerfile:
- * docker build: 
+  * docker build: 
     docker build -t ${IMAGE} -f Dockerfile .
- * docker run : 
+  * docker run : 
     docker run --gpus all -it --rm --shm-size=8g ${IMAGE}
 
 
