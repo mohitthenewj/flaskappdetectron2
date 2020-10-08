@@ -49,7 +49,7 @@ RUN apt-get install ffmpeg -y
 # RUN pip install --user opencv-python
 # RUN pip install --user azure-cosmos 
 RUN mkdir /app
-COPY ./all_code/requirements.txt /app/
+COPY ./source_code/requirements.txt /app/
 
 RUN pip install -r /app/requirements.txt --ignore-installed
 
@@ -68,7 +68,7 @@ ENV FORCE_CUDA="1"
 ARG TORCH_CUDA_ARCH_LIST="Kepler;Kepler+Tesla;Maxwell;Maxwell+Tegra;Pascal;Volta;Turing"
 ENV TORCH_CUDA_ARCH_LIST="${TORCH_CUDA_ARCH_LIST}"
 
-COPY ./all_code/ /app/
+COPY ./source_code/ /app/
 
 # ENV CUDA_HOME='/usr/local/cuda'
 
