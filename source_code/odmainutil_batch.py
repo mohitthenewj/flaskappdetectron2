@@ -32,9 +32,6 @@ from predictor import VisualizationDemo
 
 # constants
 WINDOW_NAME = "COCO detections"
-# basepath = f'/data1/code_base/mnt_data/ODbatch'
-# vid_folder = f'{basepath}/vids'
-# json_folder = f'{basepath}/JSON'
 
 def setup_cfg(args):
     cfg = get_cfg()
@@ -58,12 +55,9 @@ def get_parser():
     parser = argparse.ArgumentParser(description="Detectron2 demo for builtin models")
     parser.add_argument(
         "--config-file",
-        # default = '/app/docker_files/detectron2/configs/Misc/panoptic_fpn_R_101_dconv_cascade_gn_3x.yaml',
         # default = '/data1/code_base/mnt_data/stream/d2/all_code/docker_files/detectron2/configs/COCO-PanopticSegmentation/panoptic_fpn_R_101_3x.yaml',
         default = '/app/docker_files/detectron2/configs/COCO-PanopticSegmentation/panoptic_fpn_R_101_3x.yaml',
-
-        # default = f'{basepath}/panoptic_fpn_R_101_3x.yaml',
-
+        
         metavar="FILE",
 
         help="path to config file",
@@ -185,10 +179,11 @@ def object_d2(video_id=None, model=None):
 
             # print(f'writing OD output inside {">"*10} {json_folder}/{video_id}.json')
             # print(data)
+            # with open(f'{json_folder}/{video_id}.json', 'w') as f:
+            # json.dump(data,f)
+
             print(f'{"<"*20} inference completed {">"*20}')
             return data
-            # with open(f'{json_folder}/{video_id}.json', 'w') as f:
-            #     json.dump(data,f)
 
     except Exception as e:
         print(f'Caught exception during inference, error is {">"*10} {e}')
@@ -196,15 +191,6 @@ def object_d2(video_id=None, model=None):
             f.write(str(e))
         pass
 
-
-# files_ffmpeg=[]
-# for f in listdir('{basepath}/ffmpegvid/'):
-#     if re.search('\d+\_$',f[:-4]) and os.path.getsize(f'./vids/{f}') != 0:
-#         files_ffmpeg.append(f.split('.')[0])
-
-# files = [i.split('.')[0] for i in listdir(f'{vid_folder}')]
-# print()f'Total fetched files are {">"*10} {len(files)}'
-# files = ['112019_4_']
 
 if __name__=='__main__':
     object_d2(files)
